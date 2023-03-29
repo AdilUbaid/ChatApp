@@ -1,18 +1,21 @@
 import 'package:chitchat/screens/profile_setup_screen/profile_setup_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../screens/constants.dart';
 import '../screens/home_screen/home_screen.dart';
 import '../screens/number_register_screen/number_registration_screen.dart';
+import '../screens/number_register_screen/otp_screen.dart';
 
 class WelcomeButton extends StatelessWidget {
   final String textOfButton;
   final int pageNumber;
+  final Future? function;
   const WelcomeButton({
     super.key,
     required this.textOfButton,
-    required this.pageNumber,
+    required this.pageNumber,  this.function,
   });
 
   @override
@@ -30,25 +33,40 @@ class WelcomeButton extends StatelessWidget {
             ),
         child: Text(
           textOfButton,
-          style:const TextStyle(color: whiteColor),
+          style: const TextStyle(color: whiteColor),
         ),
       ),
     );
   }
 
-  pageNavigator(number, context) {
+  pageNavigator(number, context) async {
     switch (number) {
       case 0:
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => const NumberRegScreen()));
+        {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => NumberRegScreen()));
+        }
         break;
       case 1:
+        {
+          await FirebaseAuth.instance.verifyPhoneNumber(
+            // phoneNumber: '${contr}',
+            verificationCompleted: (PhoneAuthCredential credential) {},
+            verificationFailed: (FirebaseAuthException e) {},
+            codeSent: (String verificationId, int? resendToken) {},
+            codeAutoRetrievalTimeout: (String verificationId) {},
+          );
+          // Navigator.push(context,
+          //     MaterialPageRoute(builder: (context) => const OtpScreen()));
+        }
+        break;
+      case 2:
         Navigator.push(
             context,
             MaterialPageRoute(
                 builder: (context) => const ProfileSetupScreen()));
         break;
-      case 2:
+      case 3:
         Navigator.push(context,
             MaterialPageRoute(builder: (context) => const HomeScreen()));
         break;

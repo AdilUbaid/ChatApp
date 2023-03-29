@@ -20,6 +20,7 @@ class ProfileSetupScreen extends StatelessWidget {
               SizedBox(
                 height: 550.h,
                 child: Column(
+
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   // crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
@@ -65,13 +66,13 @@ class ProfileSetupScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              Padding(
-                padding: EdgeInsets.only(bottom: 30.h),
-                child: const WelcomeButton(
-                  textOfButton: "Save",
-                  pageNumber: 2,
-                ),
-              )
+              // Padding(
+              //   padding: EdgeInsets.only(bottom: 30.h),
+              //   child: const WelcomeButton(
+              //     textOfButton: "Save",
+              //     pageNumber: 3,
+              //   ),
+              // )
             ],
           ),
         ),
