@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:chitchat/widgets/welcome_button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -6,7 +8,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class NumberRegScreen extends StatelessWidget {
   NumberRegScreen({super.key});
   final countryCodeController = TextEditingController();
-  final phoneNumberController = TextEditingController();
+  final phoneNumberCOntroller = TextEditingController();
   @override
   Widget build(BuildContext context) {
     // final countryCodeController = TextEditingController();
@@ -83,7 +85,7 @@ class NumberRegScreen extends StatelessWidget {
                         // color: Colors.orange.shade100,
                         width: 450.w,
                         child: TextField(
-                          controller: phoneNumberController,
+                          controller: phoneNumberCOntroller,
                           decoration: InputDecoration(
                               border: InputBorder.none,
                               hintText: 'Phone Number ',
@@ -112,8 +114,10 @@ class NumberRegScreen extends StatelessWidget {
 
   authFunction() async {
     {
+      log(countryCodeController.text + phoneNumberCOntroller.text);
       await FirebaseAuth.instance.verifyPhoneNumber(
-        phoneNumber: '+91 9961 755 401',
+        phoneNumber:
+            '${countryCodeController.text + phoneNumberCOntroller.text}',
         verificationCompleted: (PhoneAuthCredential credential) {},
         verificationFailed: (FirebaseAuthException e) {},
         codeSent: (String verificationId, int? resendToken) {},
