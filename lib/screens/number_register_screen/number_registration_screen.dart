@@ -5,13 +5,21 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../constants.dart';
+import 'otp_screen.dart';
+
 class NumberRegScreen extends StatelessWidget {
   NumberRegScreen({super.key});
   final countryCodeController = TextEditingController();
   final phoneNumberCOntroller = TextEditingController();
+
+  static String verify = "";
+
   @override
   Widget build(BuildContext context) {
     // final countryCodeController = TextEditingController();
+    // countryCodeController.text = '+91';
+    // phoneNumberCOntroller.text = '9961755401';
 
     return Scaffold(
       body: SafeArea(
@@ -100,10 +108,22 @@ class NumberRegScreen extends StatelessWidget {
             ),
             Padding(
               padding: EdgeInsets.only(bottom: 20.h),
-              child: WelcomeButton(
-                function: authFunction(),
-                textOfButton: "Confirm number",
-                pageNumber: 1,
+              child: SizedBox(
+                height: 87.h,
+                width: 660.w,
+                child: TextButton(
+                  onPressed: () {
+                    authFunction(context);
+                  },
+                  style: const ButtonStyle(
+
+                      // backgroundColor: MaterialStatePropertyAll(orangeColor)),
+                      ),
+                  child: const Text(
+                    'continue',
+                    style: TextStyle(color: whiteColor),
+                  ),
+                ),
               ),
             )
           ],
@@ -112,15 +132,18 @@ class NumberRegScreen extends StatelessWidget {
     );
   }
 
-  authFunction() async {
+  authFunction(BuildContext context) async {
     {
-      log(countryCodeController.text + phoneNumberCOntroller.text);
+      // log(countryCodeController.text + phoneNumberCOntroller.text);
       await FirebaseAuth.instance.verifyPhoneNumber(
-        phoneNumber:
-            '${countryCodeController.text + phoneNumberCOntroller.text}',
+        phoneNumber: countryCodeController.text + phoneNumberCOntroller.text,
         verificationCompleted: (PhoneAuthCredential credential) {},
         verificationFailed: (FirebaseAuthException e) {},
-        codeSent: (String verificationId, int? resendToken) {},
+        codeSent: (String verificationId, int? resendToken) {
+          NumberRegScreen.verify = verificationId;
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => OtpScreen()));
+        },
         codeAutoRetrievalTimeout: (String verificationId) {},
       );
       // Navigator.push(context,

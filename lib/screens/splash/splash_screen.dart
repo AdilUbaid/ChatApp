@@ -1,5 +1,8 @@
 import 'dart:async';
+import 'package:chitchat/screens/home_screen/home_screen.dart';
+import 'package:chitchat/screens/profile_setup_screen/profile_setup_screen.dart';
 import 'package:chitchat/screens/welcome_screen/welcome_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
@@ -14,10 +17,19 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Timer(
-        const Duration(seconds: 4),
-        () => Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => const WelcomeScreen())));
+    Timer(const Duration(seconds: 4), () {
+      FirebaseAuth.instance.authStateChanges().listen((User? user) {
+        if (user == null) {
+          print('User is currently signed out!');
+          Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: (context) => const WelcomeScreen()));
+        } else {
+          print('User is signed in!');
+          Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: (context) => const ProfileSetupScreen()));
+        }
+      });
+    });
   }
 
   @override
@@ -34,7 +46,7 @@ class _SplashScreenState extends State<SplashScreen> {
           height: 30,
         ),
         const Text(
-          "ChitChat",
+          "kouvénta",
           style: TextStyle(
               color: Color.fromARGB(255, 221, 143, 54),
               fontSize: 25,

@@ -1,11 +1,23 @@
+import 'package:chitchat/screens/home_screen/home_screen.dart';
+import 'package:chitchat/screens/number_register_screen/number_registration_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../widgets/welcome_button.dart';
+import '../constants.dart';
 
-class OtpScreen extends StatelessWidget {
-  const OtpScreen({super.key});
+class OtpScreen extends StatefulWidget {
+  OtpScreen({super.key});
 
+  @override
+  State<OtpScreen> createState() => _OtpScreenState();
+}
+
+class _OtpScreenState extends State<OtpScreen> {
+  final otpController = TextEditingController();
+  final FirebaseAuth auth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,6 +54,7 @@ class OtpScreen extends StatelessWidget {
                   SizedBox(
                       width: 320.w,
                       child: TextField(
+                        controller: otpController,
                         autofocus: true,
                         maxLength: 6,
                         keyboardType: TextInputType.number,
@@ -56,7 +69,40 @@ class OtpScreen extends StatelessWidget {
                           focusedBorder: UnderlineInputBorder(
                               borderSide: BorderSide(color: Colors.black)),
                         ),
-                      ))
+                      )),
+                  Padding(
+                    padding: EdgeInsets.only(bottom: 20.h),
+                    child: SizedBox(
+                      height: 87.h,
+                      width: 660.w,
+                      child: TextButton(
+                        onPressed: () async {
+                          try {
+                            PhoneAuthCredential credential =
+                                PhoneAuthProvider.credential(
+                                    verificationId: NumberRegScreen.verify,
+                                    smsCode: otpController.text);
+                            await auth.signInWithCredential(credential);
+                            // ignore: use_build_context_synchronously
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const HomeScreen()));
+                          } catch (e) {
+                            print('wrong OTP');
+                          }
+                        },
+                        style: const ButtonStyle(
+
+                            // backgroundColor: MaterialStatePropertyAll(orangeColor)),
+                            ),
+                        child: const Text(
+                          'continue',
+                          style: TextStyle(color: whiteColor),
+                        ),
+                      ),
+                    ),
+                  )
                 ],
               ),
             ),
