@@ -25,9 +25,12 @@ class _SplashScreenState extends State<SplashScreen> {
               MaterialPageRoute(builder: (context) => const WelcomeScreen()));
         } else {
           print('User is signed in!');
+          
           Navigator.pushReplacement(context,
-              MaterialPageRoute(builder: (context) => const ProfileSetupScreen()));
+              MaterialPageRoute(builder: (context) =>  ProfileSetupScreen()));
         }
+        // Navigator.pushReplacement(context,
+        //       MaterialPageRoute(builder: (context) => const WelcomeScreen()));
       });
     });
   }

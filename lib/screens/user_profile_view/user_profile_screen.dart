@@ -30,7 +30,7 @@ class _UserProfileViewState extends State<UserProfileView> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  const UserAvatar(
+                  UserAvatar(
                     icon: Icons.edit,
                   ),
                   Text(
@@ -60,13 +60,13 @@ class _UserProfileViewState extends State<UserProfileView> {
                     });
                   },
                 )),
-            OptionsBar(
-                icon: Icons.notifications,
-                option: "Notification",
-                widget: IconButton(
-                  icon: const Icon(Icons.keyboard_arrow_right_outlined),
-                  onPressed: () {},
-                )),
+            // OptionsBar(
+            //     icon: Icons.notifications,
+            //     option: "Notification",
+            //     widget: IconButton(
+            //       icon: const Icon(Icons.keyboard_arrow_right_outlined),
+            //       onPressed: () {},
+            //     )),
             const OptionsBar(
                 icon: Icons.policy,
                 option: "Privacy policy",

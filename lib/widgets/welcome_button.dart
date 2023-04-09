@@ -67,7 +67,7 @@ class WelcomeButton extends StatelessWidget {
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => const ProfileSetupScreen()));
+                builder: (context) =>  ProfileSetupScreen()));
         break;
       case 3:
         Navigator.push(context,

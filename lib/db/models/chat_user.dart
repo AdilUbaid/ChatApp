@@ -7,14 +7,21 @@ class ChatUser extends Equatable {
   final String phoneNumber;
   final String aboutMe;
 
-  const ChatUser(
+  ChatUser(
       {required this.id,
       required this.image,
       required this.userName,
       required this.phoneNumber,
       required this.aboutMe});
-      
-        @override
-        // TODO: implement props
-        List<Object?> get props => throw UnimplementedError();
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => throw UnimplementedError();
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'image': image,
+        'userName': userName,
+        'phoneNumber': phoneNumber,
+        'aboutMe': aboutMe,
+      };
 }

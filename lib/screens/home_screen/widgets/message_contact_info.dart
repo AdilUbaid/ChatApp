@@ -1,4 +1,3 @@
-
 import 'package:chitchat/screens/chat_screen/chat_screen.dart';
 import 'package:chitchat/screens/constants.dart';
 import 'package:chitchat/widgets/avater_circle.dart';
@@ -78,7 +77,7 @@ class _MessageContactInfoState extends State<MessageContactInfo> {
                           Row(
                             children: const [
                               Text("last message preview"),
-                              Text('  time'),
+                              Text('  9:00 pm'),
                             ],
                           ),
                         ],
@@ -111,6 +110,3 @@ class _MessageContactInfoState extends State<MessageContactInfo> {
     );
   }
 }
-
-
-

@@ -53,7 +53,7 @@ class NumberRegScreen extends StatelessWidget {
                       )),
                   ConstrainedBox(constraints: BoxConstraints(minHeight: 102.h)),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       Container(
                         // color: Colors.orange.shade100,
@@ -92,7 +92,8 @@ class NumberRegScreen extends StatelessWidget {
                         height: 70.h,
                         // color: Colors.orange.shade100,
                         width: 450.w,
-                        child: TextField(
+                        child: TextFormField(
+                          // maxLength: 10,
                           controller: phoneNumberCOntroller,
                           decoration: InputDecoration(
                               border: InputBorder.none,
@@ -141,8 +142,8 @@ class NumberRegScreen extends StatelessWidget {
         verificationFailed: (FirebaseAuthException e) {},
         codeSent: (String verificationId, int? resendToken) {
           NumberRegScreen.verify = verificationId;
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => OtpScreen()));
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => OtpScreen()));
         },
         codeAutoRetrievalTimeout: (String verificationId) {},
       );
