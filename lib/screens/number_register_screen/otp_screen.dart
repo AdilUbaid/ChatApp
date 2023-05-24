@@ -1,5 +1,6 @@
 import 'package:chitchat/screens/home_screen/home_screen.dart';
 import 'package:chitchat/screens/number_register_screen/number_registration_screen.dart';
+import 'package:chitchat/screens/profile_setup_screen/profile_setup_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -87,7 +88,7 @@ class _OtpScreenState extends State<OtpScreen> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => const HomeScreen()));
+                                    builder: (context) =>ProfileSetupScreen()));
                           } catch (e) {
                             print('wrong OTP');
                           }

@@ -1,7 +1,6 @@
 import 'dart:developer';
 
 import 'package:chitchat/screens/constants.dart';
-// import 'package:chitchat/';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -9,6 +8,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../db/models/chat_user.dart';
 import '../../widgets/user_avatar.dart';
 import '../home_screen/home_screen.dart';
+import '../number_register_screen/number_registration_screen.dart';
 
 class ProfileSetupScreen extends StatelessWidget {
   ProfileSetupScreen({super.key});
@@ -85,10 +85,10 @@ class ProfileSetupScreen extends StatelessWidget {
                         log(nameController.text);
                         createUser(name: nameController.text, context: context);
 
-                        // Navigator.push(
-                        //     context,
-                        //     MaterialPageRoute(
-                        //         builder: (context) => const HomeScreen()));
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const HomeScreen()));
                       },
                       style: const ButtonStyle(
 
@@ -107,23 +107,26 @@ class ProfileSetupScreen extends StatelessWidget {
     );
   }
 
+  // Stream<List<ChatUser>> readUsers() =>
+  //     FirebaseFirestore.instance.collection('users').snapshots().map((snapshot)=>snapshot.docs.map((doc)=>ChatUser.fromJson(doc.data())).data).tolist;
+
   Future createUser({required String name, context}) async {
     final docUser = FirebaseFirestore.instance.collection('users').doc();
-    if (imageUrl == "") {
-      ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('please upload an image')));
-      return;
-    }
+    // if (imageUrl == "") {
+    //   ScaffoldMessenger.of(context).showSnackBar(
+    //       const SnackBar(content: Text('please upload an image')));
+    //   return;
+    // }
     final user = ChatUser(
         id: docUser.id,
         image: imageUrl,
         userName: nameController.text,
-        phoneNumber: '+919961755401',
+        phoneNumber: gPhoneNumber!,
         aboutMe: aboutController.text);
     final json = user.toJson();
     await docUser.set(json);
   }
 }
-
 // class ChatUser {
 // }
+

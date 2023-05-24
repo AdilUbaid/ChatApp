@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:chitchat/screens/home_screen/home_screen.dart';
+import 'package:chitchat/screens/number_register_screen/number_registration_screen.dart';
 import 'package:chitchat/screens/profile_setup_screen/profile_setup_screen.dart';
 import 'package:chitchat/screens/welcome_screen/welcome_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -19,18 +20,18 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
     Timer(const Duration(seconds: 4), () {
       FirebaseAuth.instance.authStateChanges().listen((User? user) {
-        if (user == null) {
-          print('User is currently signed out!');
-          Navigator.pushReplacement(context,
-              MaterialPageRoute(builder: (context) => const WelcomeScreen()));
-        } else {
-          print('User is signed in!');
-          
-          Navigator.pushReplacement(context,
-              MaterialPageRoute(builder: (context) =>  ProfileSetupScreen()));
-        }
-        // Navigator.pushReplacement(context,
+        // if (user == null) {
+        //   print('User is currently signed out!');
+        //   Navigator.pushReplacement(context,
         //       MaterialPageRoute(builder: (context) => const WelcomeScreen()));
+        // } else {
+        //   print('User is signed in!');
+
+        //   Navigator.pushReplacement(
+        //       context, MaterialPageRoute(builder: (context) => HomeScreen()));
+        // }
+        Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: (context) =>NumberRegScreen()));
       });
     });
   }

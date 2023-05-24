@@ -25,3 +25,6 @@ class ChatUser extends Equatable {
         'aboutMe': aboutMe,
       };
 }
+class UserField {
+  static final String lastMessageTime = 'lastMessageTime';
+}

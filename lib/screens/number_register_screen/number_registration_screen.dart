@@ -8,6 +8,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../constants.dart';
 import 'otp_screen.dart';
 
+String? gPhoneNumber;
+
 class NumberRegScreen extends StatelessWidget {
   NumberRegScreen({super.key});
   final countryCodeController = TextEditingController();
@@ -135,6 +137,7 @@ class NumberRegScreen extends StatelessWidget {
 
   authFunction(BuildContext context) async {
     {
+      gPhoneNumber = phoneNumberCOntroller.text;
       // log(countryCodeController.text + phoneNumberCOntroller.text);
       await FirebaseAuth.instance.verifyPhoneNumber(
         phoneNumber: countryCodeController.text + phoneNumberCOntroller.text,

@@ -1,15 +1,21 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import 'package:chitchat/screens/chat_screen/widget/date_container.dart';
 import 'package:chitchat/screens/chat_screen/widget/message_box.dart';
 import 'package:chitchat/screens/chat_screen/widget/text_field.dart';
 import 'package:chitchat/screens/constants.dart';
 import 'package:chitchat/widgets/avater_circle.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../audio_call_screen/audio_call_screen.dart';
 
 class ChatScreen extends StatefulWidget {
-  const ChatScreen({super.key});
+   String idUser;
+   ChatScreen({
+    Key? key,
+    required this.idUser,
+  }) : super(key: key);
 
   @override
   State<ChatScreen> createState() => _ChatScreenState();

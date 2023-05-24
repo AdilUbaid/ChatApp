@@ -1,13 +1,20 @@
-import 'package:chitchat/screens/chat_screen/chat_screen.dart';
-import 'package:chitchat/screens/constants.dart';
-import 'package:chitchat/widgets/avater_circle.dart';
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import 'package:chitchat/screens/chat_screen/chat_screen.dart';
+import 'package:chitchat/screens/constants.dart';
+import 'package:chitchat/screens/search_screen/search_screen.dart';
+import 'package:chitchat/widgets/avater_circle.dart';
 
 import 'avatar_pop_up.dart';
 
 class MessageContactInfo extends StatefulWidget {
-  const MessageContactInfo({super.key});
+  int index;
+  MessageContactInfo({
+    Key? key,
+    required this.index,
+  }) : super(key: key);
 
   @override
   State<MessageContactInfo> createState() => _MessageContactInfoState();
@@ -54,7 +61,7 @@ class _MessageContactInfoState extends State<MessageContactInfo> {
               onTap: () => Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const ChatScreen(),
+                    builder: (context) =>  ChatScreen(idUser: availableUsers[widget.index].data()['id']),
                   )),
               child: SizedBox(
                 // color: Colors.red,
@@ -70,7 +77,7 @@ class _MessageContactInfoState extends State<MessageContactInfo> {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Text(
-                            "name",
+                            availableUsers[widget.index].data()['userName'],
                             style: TextStyle(
                                 fontWeight: FontWeight.w600, fontSize: 27.sp),
                           ),

@@ -120,4 +120,20 @@ class TextMessageField extends StatelessWidget {
             },
             icon: Icon(icon)));
   }
+  // void sendMessage() async {
+  //   FocusScope.of(context).unfocus();
+
+  //   //upload message
+  //   await FirebaseApi.(
+  //     currentUserId: widget.currentUser!.uid,
+  //     recieverId: widget.snap.uid,
+  //     message: messages,
+  //     recieverAvatarUrl: widget.snap.photoUrl,
+  //     recieverUsername: widget.snap.username,
+  //   );
+
+  //   //
+  //   _textController.clear();
+  //   messages = '';
+  // }
 }

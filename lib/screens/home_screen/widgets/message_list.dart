@@ -1,5 +1,6 @@
 import 'package:chitchat/screens/constants.dart';
 import 'package:chitchat/screens/home_screen/widgets/message_contact_info.dart';
+import 'package:chitchat/screens/search_screen/search_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
@@ -50,10 +51,10 @@ class MessageList extends StatelessWidget {
                       bottomRight: Radius.circular(10)),
                 )
               ]),
-              child: const MessageContactInfo()),
+              child:  MessageContactInfo(index: index,)),
         );
       },
-      itemCount: 10,
+      itemCount: availableUsers.length,
       separatorBuilder: (BuildContext context, int index) => Divider(
         color: Colors.grey[200],
         indent: 10,
