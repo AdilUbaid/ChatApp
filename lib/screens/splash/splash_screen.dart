@@ -20,18 +20,18 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
     Timer(const Duration(seconds: 4), () {
       FirebaseAuth.instance.authStateChanges().listen((User? user) {
-        // if (user == null) {
-        //   print('User is currently signed out!');
-        //   Navigator.pushReplacement(context,
-        //       MaterialPageRoute(builder: (context) => const WelcomeScreen()));
-        // } else {
-        //   print('User is signed in!');
+        if (user == null) {
+          print('User is currently signed out!');
+          Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: (context) => const WelcomeScreen()));
+        } else {
+          print('User is signed in!');
 
-        //   Navigator.pushReplacement(
-        //       context, MaterialPageRoute(builder: (context) => HomeScreen()));
-        // }
-        Navigator.pushReplacement(context,
-              MaterialPageRoute(builder: (context) =>NumberRegScreen()));
+          Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (context) => HomeScreen()));
+        }
+        // Navigator.pushReplacement(context,
+        //       MaterialPageRoute(builder: (context) =>NumberRegScreen()));
       });
     });
   }

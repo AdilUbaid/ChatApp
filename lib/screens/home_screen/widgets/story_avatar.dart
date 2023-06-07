@@ -19,7 +19,7 @@ class StoryAvatar extends StatelessWidget {
                 border: Border.all(color: orangeColor, width: 3),
                 borderRadius: BorderRadius.circular(40),
               ),
-              child: const AvatarCircle(),
+              child: AvatarCircle(),
             ),
           ),
           const Padding(

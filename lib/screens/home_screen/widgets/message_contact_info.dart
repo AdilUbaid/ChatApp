@@ -1,4 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -6,13 +8,17 @@ import 'package:chitchat/screens/chat_screen/chat_screen.dart';
 import 'package:chitchat/screens/constants.dart';
 import 'package:chitchat/screens/search_screen/search_screen.dart';
 import 'package:chitchat/widgets/avater_circle.dart';
+import 'package:intl/intl.dart';
 
+import '../../../db/models/chat_user.dart';
 import 'avatar_pop_up.dart';
 
 class MessageContactInfo extends StatefulWidget {
+  DocumentSnapshot userSnap;
   int index;
   MessageContactInfo({
     Key? key,
+    required this.userSnap,
     required this.index,
   }) : super(key: key);
 
@@ -40,7 +46,7 @@ class _MessageContactInfoState extends State<MessageContactInfo> {
             child: Stack(
               alignment: const AlignmentDirectional(.8, .9),
               children: [
-                const AvatarCircle(),
+                AvatarCircle(url: widget.userSnap['image']),
                 Container(
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
@@ -61,7 +67,10 @@ class _MessageContactInfoState extends State<MessageContactInfo> {
               onTap: () => Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) =>  ChatScreen(idUser: availableUsers[widget.index].data()['id']),
+                    builder: (context) => ChatScreen(
+                      idUser: widget.userSnap['id'], receiver: widget.userSnap,
+                      // snap: widget.snap,
+                    ),
                   )),
               child: SizedBox(
                 // color: Colors.red,
@@ -77,14 +86,16 @@ class _MessageContactInfoState extends State<MessageContactInfo> {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Text(
-                            availableUsers[widget.index].data()['userName'],
+                            // availableUsers[widget.index].data()['userName'],
+                            widget.userSnap['userName'],
                             style: TextStyle(
                                 fontWeight: FontWeight.w600, fontSize: 27.sp),
                           ),
                           Row(
-                            children: const [
+                            children: [
                               Text("last message preview"),
-                              Text('  9:00 pm'),
+                              Text(DateFormat('hh:mm').format(
+                                  widget.userSnap['lastMessageTime'].toDate())),
                             ],
                           ),
                         ],

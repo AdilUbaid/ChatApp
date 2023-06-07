@@ -1,10 +1,18 @@
+import 'dart:developer';
+
 import 'package:chitchat/screens/constants.dart';
 import 'package:chitchat/screens/home_screen/widgets/calls_tab.dart';
 import 'package:chitchat/screens/home_screen/widgets/message_tab.dart';
 import 'package:chitchat/screens/search_screen/search_screen.dart';
 import 'package:chitchat/screens/user_profile_view/user_profile_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
+
+import '../../controller/provider.dart';
+import '../../widgets/avater_circle.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -19,7 +27,14 @@ class _HomeScreenState extends State<HomeScreen>
   @override
   void initState() {
     super.initState();
+    addData();
     controller = TabController(length: 2, vsync: this);
+  }
+
+  addData() async {
+    UserProvider userProvider = Provider.of(context, listen: false);
+    await userProvider.refreshUser();
+    log(FirebaseAuth.instance.currentUser!.displayName.toString());
   }
 
   @override
@@ -62,7 +77,7 @@ class _HomeScreenState extends State<HomeScreen>
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) =>  SearchScreen()));
+                        builder: (context) => const SearchScreen()));
               },
               child: Icon(
                 Icons.search_outlined,
@@ -77,24 +92,40 @@ class _HomeScreenState extends State<HomeScreen>
 }
 
 class UserIcon extends StatelessWidget {
-  const UserIcon({
-    super.key,
-  });
+  const UserIcon({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () => Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const UserProfileView(),
-          )),
-      child: const Padding(
-        padding: EdgeInsets.only(right: 8),
-        child: CircleAvatar(
-          backgroundImage: AssetImage("assets/images/avatar_male_1.jpg"),
-        ),
-      ),
+    final currentUser = Provider.of<UserProvider>(context).getUser;
+
+    return StreamBuilder<DocumentSnapshot>(
+      stream: FirebaseFirestore.instance
+          .collection('users')
+          .doc(currentUser.id)
+          .snapshots(),
+      builder: (context, snapshot) {
+        if (snapshot.hasError) {
+          return const CircularProgressIndicator();
+        } else if (snapshot.hasData) {
+          DocumentSnapshot userSnap = snapshot.data!;
+          return InkWell(
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const UserProfileView(),
+              ),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.only(right: 8),
+              child: CircleAvatar(
+                backgroundImage: imagePick(currentUser.image),
+              ),
+            ),
+          );
+        } else {
+          return const CircularProgressIndicator();
+        }
+      },
     );
   }
 }

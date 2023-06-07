@@ -136,22 +136,20 @@ class NumberRegScreen extends StatelessWidget {
   }
 
   authFunction(BuildContext context) async {
-    {
-      gPhoneNumber = phoneNumberCOntroller.text;
-      // log(countryCodeController.text + phoneNumberCOntroller.text);
-      await FirebaseAuth.instance.verifyPhoneNumber(
-        phoneNumber: countryCodeController.text + phoneNumberCOntroller.text,
-        verificationCompleted: (PhoneAuthCredential credential) {},
-        verificationFailed: (FirebaseAuthException e) {},
-        codeSent: (String verificationId, int? resendToken) {
-          NumberRegScreen.verify = verificationId;
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => OtpScreen()));
-        },
-        codeAutoRetrievalTimeout: (String verificationId) {},
-      );
-      // Navigator.push(context,
-      //     MaterialPageRoute(builder: (context) => const OtpScreen()));
-    }
+    gPhoneNumber = phoneNumberCOntroller.text;
+    // log(countryCodeController.text + phoneNumberCOntroller.text);
+    await FirebaseAuth.instance.verifyPhoneNumber(
+      phoneNumber: countryCodeController.text + phoneNumberCOntroller.text,
+      verificationCompleted: (PhoneAuthCredential credential) {},
+      verificationFailed: (FirebaseAuthException e) {},
+      codeSent: (String verificationId, int? resendToken) {
+        NumberRegScreen.verify = verificationId;
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => OtpScreen()));
+      },
+      codeAutoRetrievalTimeout: (String verificationId) {},
+    );
+    // Navigator.push(context,
+    //     MaterialPageRoute(builder: (context) => const OtpScreen()));
   }
 }

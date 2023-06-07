@@ -1,5 +1,9 @@
+import 'dart:developer';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 
 import '../../constants.dart';
 
@@ -7,16 +11,19 @@ class MessageBox extends StatelessWidget {
   // final String message;
   final Widget content;
   final bool isRight;
+  final DateTime time;
   const MessageBox({
     super.key,
     // required this.message,
     required this.isRight,
     required this.content,
+    required this.time,
     // required String message
   });
 
   @override
   Widget build(BuildContext context) {
+    log(FirebaseAuth.instance.currentUser!.uid.toString());
     return Padding(
       padding: EdgeInsets.only(left: 12.w, right: 12.w, top: 5.w, bottom: 5.w),
       child: Row(
@@ -48,18 +55,18 @@ class MessageBox extends StatelessWidget {
                     child: content,
                   ),
                   SizedBox(
-                    width: 100.w,
+                    width: 60.w,
                     child: Row(
                       children: [
                         Text(
-                          '12:20',
+                          DateFormat('hh:mm').format(time),
                           style: TextStyle(
                               fontSize: 20.sp, fontWeight: FontWeight.bold),
                         ),
-                        Icon(
-                          Icons.check,
-                          size: 20.sp,
-                        ),
+                        // Icon(
+                        //   Icons.check,
+                        //   size: 20.sp,
+                        // ),
                       ],
                     ),
                   )
@@ -89,9 +96,10 @@ class MessageText extends StatelessWidget {
       message,
       maxLines: 1000,
       style: TextStyle(
-          color: isRight ? whiteColor : blackColor,
-          fontSize: 28.sp,
-          height: 1.3,),
+        color: blackColor,
+        fontSize: 28.sp,
+        height: 1.3,
+      ),
     );
   }
 }

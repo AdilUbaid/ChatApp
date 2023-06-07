@@ -40,7 +40,7 @@ class _StoryScreenState extends State<StoryScreen> {
                     ),
                   ),
                   ListTile(
-                    leading: const AvatarCircle(),
+                    leading: AvatarCircle(),
                     title: const Text(
                       "Name",
                       style: TextStyle(color: whiteColor),

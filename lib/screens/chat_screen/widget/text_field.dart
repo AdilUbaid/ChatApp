@@ -1,18 +1,55 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 // import 'dart:html';
 
-import 'package:chitchat/screens/chat_screen/widget/request_payment.dart';
-import 'package:chitchat/screens/constants.dart';
+import 'dart:developer';
+
+import 'package:chitchat/controller/provider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:image_picker/image_picker.dart';
 
+import 'package:chitchat/screens/chat_screen/widget/request_payment.dart';
+import 'package:chitchat/screens/constants.dart';
+import 'package:provider/provider.dart';
+
+import '../../../controller/chat/chat_repository.dart';
+import '../../../db/models/chat_user.dart';
+import '../../../helper/image_picker.dart';
 
 class TextMessageField extends StatelessWidget {
-  const TextMessageField({super.key});
+  // ChatUser snap;
+  DocumentSnapshot receiver;
+  TextMessageField({
+    Key? key,
+    required this.receiver,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final UserProvider userProvider = Provider.of<UserProvider>(context);
+    String messages = '';
+    final _textController = TextEditingController();
+
+    void sendMessage() async {
+      FocusScope.of(context).unfocus();
+      // log(currentUser.id);
+      // log(messages);
+      //upload message
+      await FirebaseApi.uploadMessage(
+        currentUserId: userProvider.getUser.id,
+        recieverId: receiver['id'],
+        message: messages,
+        recieverAvatarUrl: receiver['image'],
+        recieverUsername: receiver['userName'],
+      );
+
+      _textController.clear();
+      messages = '';
+    }
+
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Row(
@@ -28,8 +65,8 @@ class TextMessageField extends StatelessWidget {
             children: [
               cameraSpeedDial(Icons.photo_camera_outlined, context),
               imageSpeedDial(Icons.image_outlined, context),
-              paymentSpeedDial(Icons.currency_rupee_outlined, context),
-              locationSpeedDial(Icons.add_location_outlined, context),
+              // paymentSpeedDial(Icons.currency_rupee_outlined, context),
+              // locationSpeedDial(Icons.add_location_outlined, context),
             ],
           ),
           SizedBox(
@@ -46,11 +83,12 @@ class TextMessageField extends StatelessWidget {
                   width: 350.w,
                   child: Padding(
                     padding: EdgeInsets.only(left: 15.w),
-                    child: const TextField(
+                    child: TextField(
+                      controller: _textController,
                       // autofocus: true,
                       minLines: 1,
                       maxLines: 7,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         border: InputBorder.none,
                       ),
                     ),
@@ -59,7 +97,14 @@ class TextMessageField extends StatelessWidget {
                 IconButton(
                     onPressed: () {},
                     icon: const Icon(Icons.emoji_emotions_outlined)),
-                IconButton(onPressed: () {}, icon: const Icon(Icons.send)),
+                IconButton(
+                    onPressed: () async {
+                      messages = _textController.text;
+                      messages.trim().isEmpty
+                          ? showSnackBar(context, 'Type some message to sent!')
+                          : sendMessage();
+                    },
+                    icon: const Icon(Icons.send)),
               ],
             ),
           ),
@@ -71,20 +116,20 @@ class TextMessageField extends StatelessWidget {
     );
   }
 
-  SpeedDialChild locationSpeedDial(IconData icon, BuildContext context) {
-    return SpeedDialChild(
-        shape: const CircleBorder(),
-        child: IconButton(
-            onPressed: () {
-              showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return const RequestPayment();
-                },
-              );
-            },
-            icon: Icon(icon)));
-  }
+  // SpeedDialChild locationSpeedDial(IconData icon, BuildContext context) {
+  //   return SpeedDialChild(
+  //       shape: const CircleBorder(),
+  //       child: IconButton(
+  //           onPressed: () {
+  //             showDialog(
+  //               context: context,
+  //               builder: (BuildContext context) {
+  //                 return const RequestPayment();
+  //               },
+  //             );
+  //           },
+  //           icon: Icon(icon)));
+  // }
 
   SpeedDialChild cameraSpeedDial(IconData icon, BuildContext context) {
     return SpeedDialChild(

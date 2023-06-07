@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:chitchat/screens/constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -9,9 +10,11 @@ import '../../db/models/chat_user.dart';
 import '../../widgets/user_avatar.dart';
 import '../home_screen/home_screen.dart';
 import '../number_register_screen/number_registration_screen.dart';
+import '../number_register_screen/otp_screen.dart';
 
 class ProfileSetupScreen extends StatelessWidget {
-  ProfileSetupScreen({super.key});
+  UserCredential? credential;
+  ProfileSetupScreen({super.key, this.credential});
 
   final nameController = TextEditingController();
   final aboutController = TextEditingController();
@@ -82,8 +85,10 @@ class ProfileSetupScreen extends StatelessWidget {
                     width: 660.w,
                     child: TextButton(
                       onPressed: () {
-                        log(nameController.text);
-                        createUser(name: nameController.text, context: context);
+                        createUser(
+                            name: nameController.text,
+                            context: context,
+                            credential: credential!);
 
                         Navigator.push(
                             context,
@@ -107,24 +112,37 @@ class ProfileSetupScreen extends StatelessWidget {
     );
   }
 
-  // Stream<List<ChatUser>> readUsers() =>
-  //     FirebaseFirestore.instance.collection('users').snapshots().map((snapshot)=>snapshot.docs.map((doc)=>ChatUser.fromJson(doc.data())).data).tolist;
+  Future createUser(
+      {required String name,
+      context,
+      required UserCredential credential}) async {
+    final docUser = FirebaseFirestore.instance;
 
-  Future createUser({required String name, context}) async {
-    final docUser = FirebaseFirestore.instance.collection('users').doc();
-    // if (imageUrl == "") {
-    //   ScaffoldMessenger.of(context).showSnackBar(
-    //       const SnackBar(content: Text('please upload an image')));
-    //   return;
-    // }
+    FirebaseAuth auth = FirebaseAuth.instance;
+
+    // ConfirmationResult confirmationResult =
+    //     await auth.signInWithPhoneNumber(gPhoneNumber!);
+    // String verificationId = confirmationResult.verificationId;
+
+    // AuthCredential credential = PhoneAuthProvider.credential(
+    //     verificationId: verificationId, smsCode: gOTP!);
+
+    //UserCredential userCredential = await auth.signInWithCredential(credential);
+
+    // return userCredential;
+
     final user = ChatUser(
-        id: docUser.id,
+        id: credential.user!.uid,
         image: imageUrl,
         userName: nameController.text,
         phoneNumber: gPhoneNumber!,
-        aboutMe: aboutController.text);
-    final json = user.toJson();
-    await docUser.set(json);
+        aboutMe: aboutController.text,
+        lastMessageTime: DateTime.now());
+    await docUser
+        .collection('users')
+        .doc(credential.user!.uid)
+        .set(user.toJson());
+    log(credential.user!.uid.toString());
   }
 }
 // class ChatUser {

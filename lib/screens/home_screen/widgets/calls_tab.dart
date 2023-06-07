@@ -13,7 +13,7 @@ class CallTab extends StatelessWidget {
       shrinkWrap: true,
       itemBuilder: (context, index) {
         return ListTile(
-          leading: const AvatarCircle(),
+          leading:  AvatarCircle(),
           title: const Text('name'),
           subtitle: const Text("time"),
           trailing: IconButton(

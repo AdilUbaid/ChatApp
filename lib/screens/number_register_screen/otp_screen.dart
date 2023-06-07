@@ -9,6 +9,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../widgets/welcome_button.dart';
 import '../constants.dart';
 
+String? gOTP;
+
 class OtpScreen extends StatefulWidget {
   OtpScreen({super.key});
 
@@ -83,12 +85,15 @@ class _OtpScreenState extends State<OtpScreen> {
                                 PhoneAuthProvider.credential(
                                     verificationId: NumberRegScreen.verify,
                                     smsCode: otpController.text);
-                            await auth.signInWithCredential(credential);
+                          UserCredential userCredential = await auth.signInWithCredential(credential);
+                            gOTP = otpController.text;
                             // ignore: use_build_context_synchronously
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) =>ProfileSetupScreen()));
+                                    builder: (context) => ProfileSetupScreen(
+                                          credential: userCredential,
+                                        )));
                           } catch (e) {
                             print('wrong OTP');
                           }
