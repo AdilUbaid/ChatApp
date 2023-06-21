@@ -1,11 +1,16 @@
 import 'dart:developer';
 
 import 'package:chitchat/screens/constants.dart';
+import 'package:chitchat/utils/utils.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
+import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
+import 'package:zego_uikit_signaling_plugin/zego_uikit_signaling_plugin.dart';
 
+import '../../controller/provider.dart';
 import '../../db/models/chat_user.dart';
 import '../../widgets/user_avatar.dart';
 import '../home_screen/home_screen.dart';
@@ -116,22 +121,13 @@ class ProfileSetupScreen extends StatelessWidget {
       {required String name,
       context,
       required UserCredential credential}) async {
+        // final UserProvider userProvider = Provider.of<UserProvider>(context);
     final docUser = FirebaseFirestore.instance;
 
     FirebaseAuth auth = FirebaseAuth.instance;
 
-    // ConfirmationResult confirmationResult =
-    //     await auth.signInWithPhoneNumber(gPhoneNumber!);
-    // String verificationId = confirmationResult.verificationId;
 
-    // AuthCredential credential = PhoneAuthProvider.credential(
-    //     verificationId: verificationId, smsCode: gOTP!);
-
-    //UserCredential userCredential = await auth.signInWithCredential(credential);
-
-    // return userCredential;
-
-    final user = ChatUser(
+    final user = ChatUser(  
         id: credential.user!.uid,
         image: imageUrl,
         userName: nameController.text,
@@ -143,6 +139,8 @@ class ProfileSetupScreen extends StatelessWidget {
         .doc(credential.user!.uid)
         .set(user.toJson());
     log(credential.user!.uid.toString());
+
+    
   }
 }
 // class ChatUser {

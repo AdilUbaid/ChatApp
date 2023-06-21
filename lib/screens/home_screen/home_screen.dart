@@ -10,8 +10,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
+import 'package:zego_uikit_signaling_plugin/zego_uikit_signaling_plugin.dart';
 
 import '../../controller/provider.dart';
+import '../../utils/utils.dart';
 import '../../widgets/avater_circle.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -45,6 +48,15 @@ class _HomeScreenState extends State<HomeScreen>
 
   @override
   Widget build(BuildContext context) {
+    final UserProvider userProvider = Provider.of<UserProvider>(context);
+    ZegoUIKitPrebuiltCallInvitationService().init(
+      appID: Utils.appId /*input your AppID*/,
+      appSign: Utils.appSignIn /*input your AppSign*/,
+      userID: userProvider.getUser.id,
+      userName: userProvider.getUser.userName,
+      plugins: [ZegoUIKitSignalingPlugin()],
+    );
+
     return SafeArea(
       child: Scaffold(
           appBar: AppBar(

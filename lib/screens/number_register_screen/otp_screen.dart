@@ -89,7 +89,7 @@ class _OtpScreenState extends State<OtpScreen> {
                             gOTP = otpController.text;
                             // ignore: use_build_context_synchronously
                             Navigator.push(
-                                context,
+                                context,                              
                                 MaterialPageRoute(
                                     builder: (context) => ProfileSetupScreen(
                                           credential: userCredential,

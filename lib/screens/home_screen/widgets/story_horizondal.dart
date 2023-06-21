@@ -1,4 +1,8 @@
+import 'dart:developer';
+import 'dart:io';
+
 import 'package:chitchat/screens/home_screen/widgets/story_avatar.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
@@ -11,6 +15,8 @@ class StoryHorizondal extends StatefulWidget {
   @override
   State<StoryHorizondal> createState() => _StoryHorizondalState();
 }
+
+String? imgUrl;
 
 class _StoryHorizondalState extends State<StoryHorizondal> {
   @override
@@ -64,6 +70,16 @@ class _StoryHorizondalState extends State<StoryHorizondal> {
   }
 
   Future picImage(ImageSource mode) async {
-    await ImagePicker().pickImage(source: mode);
+    XFile? file = await ImagePicker().pickImage(source: mode);
+    print(file?.path.toString());
+    if (file == null) return null;
+    String uniqName = DateTime.now().microsecondsSinceEpoch.toString();
+    Reference referenceRoot = FirebaseStorage.instance.ref();
+    Reference referenceDirImage = referenceRoot.child('story');
+    Reference referenceImageToUpload = referenceDirImage.child(uniqName);
+    try {
+      await referenceImageToUpload.putFile(File(file.path));
+      imgUrl = await referenceImageToUpload.getDownloadURL();
+    } catch (error) {}
   }
 }

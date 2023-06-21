@@ -5,7 +5,7 @@ import 'package:chitchat/screens/search_screen/widgets/search_widget.dart';
 import 'package:chitchat/widgets/avater_circle.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:chitchat/db/models/chat_user.dart' as model;
+// import 'package:chitchat/db/models/chat_user.dart' as model;
 
 List<dynamic> availableUsers = [];
 List<dynamic> filteredUsers = [];

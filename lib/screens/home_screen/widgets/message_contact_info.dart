@@ -93,7 +93,7 @@ class _MessageContactInfoState extends State<MessageContactInfo> {
                           ),
                           Row(
                             children: [
-                              Text("last message preview"),
+                              Text("last message preview "),
                               Text(DateFormat('hh:mm').format(
                                   widget.userSnap['lastMessageTime'].toDate())),
                             ],

@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:chitchat/screens/home_screen/home_screen.dart';
-import 'package:chitchat/screens/number_register_screen/number_registration_screen.dart';
-import 'package:chitchat/screens/profile_setup_screen/profile_setup_screen.dart';
+// import 'package:chitchat/screens/number_register_screen/number_registration_screen.dart';
+// import 'package:chitchat/screens/profile_setup_screen/profile_setup_screen.dart';
 import 'package:chitchat/screens/welcome_screen/welcome_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';

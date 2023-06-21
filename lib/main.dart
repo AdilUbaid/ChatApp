@@ -4,17 +4,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
+import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
 
 import 'controller/provider.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-  runApp(const MyApp());
+  await Firebase.initializeApp();final navigatorKey = GlobalKey<NavigatorState>();
+
+  /// 1.1.2: set navigator key to ZegoUIKitPrebuiltCallInvitationService
+  ZegoUIKitPrebuiltCallInvitationService().setNavigatorKey(navigatorKey);
+  runApp(MyApp(navigatorKey: navigatorKey));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final GlobalKey<NavigatorState> navigatorKey;
+  const MyApp({
+    required this.navigatorKey,
+    Key? key,
+  }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
@@ -22,7 +30,7 @@ class MyApp extends StatelessWidget {
         providers: [
           ChangeNotifierProvider(create: (_) => UserProvider()),
         ],
-        child: MaterialApp(
+        child: MaterialApp(navigatorKey: navigatorKey,
           // darkTheme: ThemeData.light(),
           theme: ThemeData(
             floatingActionButtonTheme: const FloatingActionButtonThemeData(

@@ -1,7 +1,9 @@
 import 'package:chitchat/screens/user_profile_view/widgets/options_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 
+import '../../controller/provider.dart';
 import '../../widgets/user_avatar.dart';
 import '../constants.dart';
 
@@ -16,6 +18,7 @@ class _UserProfileViewState extends State<UserProfileView> {
   bool light = true;
   @override
   Widget build(BuildContext context) {
+    final currentUser = Provider.of<UserProvider>(context).getUser;
     return Scaffold(
       body: SafeArea(
           child: Center(
@@ -34,12 +37,12 @@ class _UserProfileViewState extends State<UserProfileView> {
                     icon: Icons.edit,
                   ),
                   Text(
-                    'Username',
+                    currentUser.userName,
                     style:
                         TextStyle(fontSize: 40.sp, fontWeight: FontWeight.bold),
                   ),
                   Text(
-                    'about',
+                   currentUser.aboutMe,
                     style: TextStyle(
                       fontSize: 30.sp,
                     ),
