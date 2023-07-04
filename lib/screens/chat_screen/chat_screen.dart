@@ -2,6 +2,7 @@
 
 import 'dart:developer';
 
+import 'package:chitchat/controller/call/call_repository.dart';
 import 'package:chitchat/db/models/chat_user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -110,14 +111,13 @@ class _ChatScreenState extends State<ChatScreen> {
           child: Column(
         children: [
           Expanded(
-            // flex: 1,
             child: StreamBuilder(
                 stream: FirebaseApi.getMessages(
                     idUser: userProvider.getUser.id, recieverId: widget.idUser),
                 builder:
                     (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-                  log(widget.idUser);
-                  log(FirebaseAuth.instance.currentUser!.uid);
+                  // log(widget.idUser);
+                  // log(FirebaseAuth.instance.currentUser!.uid);
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(
                       child: CircularProgressIndicator(),
@@ -173,12 +173,23 @@ class _ChatScreenState extends State<ChatScreen> {
         ),
       );
   ZegoSendCallInvitationButton actionButton(bool isVideo, ChatUser user) {
-    log('zego works');
+    // log('XXXXXXXXXXXXXXXXXXXXXXX');
+    // print('XXXXXXXXXXXXXXXXXXXXXXX');
+    FirebaseCallApi.uploadCallDetail(
+        callerId: user.id,
+        callerName: user.userName,
+        callerAvatar: user.image,
+        receiverId: widget.receiver['id'],
+        receiverName: widget.receiver['userName'],
+        receiverAvatar: widget.receiver['image'],
+        isMissed: false,
+        timeOfCall: DateTime.now(),
+        isVideo: isVideo);
     return ZegoSendCallInvitationButton(
       notificationMessage: 'incoming call',
       notificationTitle: widget.receiver['userName'],
       iconTextSpacing: 0.0,
-            iconSize: const Size(35, 35),
+      iconSize: const Size(35, 35),
       isVideoCall: isVideo,
       callID: '12',
       invitees: [
@@ -188,4 +199,3 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 }
-

@@ -1,4 +1,5 @@
 import 'package:chitchat/screens/user_profile_view/widgets/options_list.dart';
+import 'package:chitchat/screens/user_profile_view/widgets/profile_edit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -33,8 +34,28 @@ class _UserProfileViewState extends State<UserProfileView> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  UserAvatar(
-                    icon: Icons.edit,
+                  Stack(
+                    alignment: AlignmentDirectional.bottomEnd,
+                    children: [
+                      CircleAvatar(
+                        backgroundImage: NetworkImage(currentUser.image),
+                        radius: 140.r,
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                            color: orangeColor,
+                            borderRadius: BorderRadius.circular(50.r)),
+                        child: IconButton(
+                            onPressed: () {
+                              showDialog(
+                                context: context,
+                                builder: (context) => ProfileEdit(),
+                              );
+                            },
+                            icon: Icon(Icons.edit),
+                            color: whiteColor),
+                      )
+                    ],
                   ),
                   Text(
                     currentUser.userName,
@@ -42,7 +63,7 @@ class _UserProfileViewState extends State<UserProfileView> {
                         TextStyle(fontSize: 40.sp, fontWeight: FontWeight.bold),
                   ),
                   Text(
-                   currentUser.aboutMe,
+                    currentUser.aboutMe,
                     style: TextStyle(
                       fontSize: 30.sp,
                     ),

@@ -15,7 +15,7 @@ class Message {
 
   const Message({
     required this.senderId,
-    required this.recieverId,
+    required this.recieverId, 
     required this.recieverAvatarUrl,
     required this.recieverUsername,
     required this.message,

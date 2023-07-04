@@ -1,5 +1,6 @@
 import 'package:chitchat/screens/constants.dart';
 import 'package:chitchat/screens/splash/splash_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -10,9 +11,9 @@ import 'controller/provider.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();final navigatorKey = GlobalKey<NavigatorState>();
+  await Firebase.initializeApp();
+  final navigatorKey = GlobalKey<NavigatorState>();
 
-  /// 1.1.2: set navigator key to ZegoUIKitPrebuiltCallInvitationService
   ZegoUIKitPrebuiltCallInvitationService().setNavigatorKey(navigatorKey);
   runApp(MyApp(navigatorKey: navigatorKey));
 }
@@ -30,7 +31,8 @@ class MyApp extends StatelessWidget {
         providers: [
           ChangeNotifierProvider(create: (_) => UserProvider()),
         ],
-        child: MaterialApp(navigatorKey: navigatorKey,
+        child: MaterialApp(
+          navigatorKey: navigatorKey,
           // darkTheme: ThemeData.light(),
           theme: ThemeData(
             floatingActionButtonTheme: const FloatingActionButtonThemeData(
@@ -51,4 +53,6 @@ class MyApp extends StatelessWidget {
       designSize: const Size(720, 1560),
     );
   }
+
+  
 }

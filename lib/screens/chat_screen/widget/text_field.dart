@@ -1,11 +1,6 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-// import 'dart:html';
-
-// import 'dart:developer';
 
 import 'package:chitchat/controller/provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
@@ -16,7 +11,6 @@ import 'package:chitchat/screens/constants.dart';
 import 'package:provider/provider.dart';
 
 import '../../../controller/chat/chat_repository.dart';
-// import '../../../db/models/chat_user.dart';
 import '../../../helper/image_picker.dart';
 
 // ignore: must_be_immutable
@@ -152,34 +146,20 @@ class TextMessageField extends StatelessWidget {
             icon: Icon(icon)));
   }
 
-  SpeedDialChild paymentSpeedDial(IconData icon, BuildContext context) {
-    return SpeedDialChild(
-        shape: const CircleBorder(),
-        child: IconButton(
-            onPressed: () {
-              showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return const RequestPayment();
-                },
-              );
-            },
-            icon: Icon(icon)));
-  }
-  // void sendMessage() async {
-  //   FocusScope.of(context).unfocus();
-
-  //   //upload message
-  //   await FirebaseApi.(
-  //     currentUserId: widget.currentUser!.uid,
-  //     recieverId: widget.snap.uid,
-  //     message: messages,
-  //     recieverAvatarUrl: widget.snap.photoUrl,
-  //     recieverUsername: widget.snap.username,
-  //   );
-
-  //   //
-  //   _textController.clear();
-  //   messages = '';
+  // SpeedDialChild paymentSpeedDial(IconData icon, BuildContext context) {
+  //   return SpeedDialChild(
+  //       shape: const CircleBorder(),
+  //       child: IconButton(
+  //           onPressed: () {
+  //             showDialog(
+  //               context: context,
+  //               builder: (BuildContext context) {
+  //                 return const RequestPayment();
+  //               },
+  //             );
+  //           },
+  //           icon: Icon(icon)));
   // }
+  
+
 }

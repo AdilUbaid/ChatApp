@@ -73,24 +73,4 @@ class FirebaseApi {
           // .orderBy(MessageField.createdAt, descending: true)
           .snapshots();
 
-  // Future<void> clearMessages(
-  //     {required String currentuserId, required String reciever}) async {
-  //   await FirebaseFirestore.instance
-  //       .collection('chats')
-  //       .doc(currentuserId)
-  //       .collection('messages')
-  //       .doc(reciever)
-  //       .delete();
-  //   await FirebaseFirestore.instance
-  //       .collection('chats')
-  //       .doc(reciever)
-  //       .collection('messages')
-  //       .doc(currentuserId)
-  //       .delete();
-
-// var snapshots = await collection.get();
-// for (var doc in snapshots.docs) {
-//   await doc.reference.delete();
-
-  // }
 }
